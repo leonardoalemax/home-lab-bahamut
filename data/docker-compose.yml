@@ -86,12 +86,13 @@ services:
             - nextcloud-db
         volumes:
             - hl-v-nextcloud:/var/www/html
-            # - hl-v-nextcloud-memories:/var/www/html/data/alemax/files/Memories/:ro
+            - hl-v-nextcloud-memories:/var/www/html/data/alemax/files/Memories/:ro
         environment:
             - MYSQL_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
             - MYSQL_HOST=nextcloud-db
+            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
     minio:
         container_name: hl-minio-storage
         image: docker.io/bitnami/minio:2023
