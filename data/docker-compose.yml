@@ -63,7 +63,7 @@ services:
         volumes:
             - "~/Pictures:/photoprism/originals"
             - "./storage:/photoprism/storage"
-            - hl-v-nextcloud-data/Memories:/photoprism/originals/alemax
+            - hl-v-nextcloud-memories:/photoprism/originals/alemax
     nextcloud-db:
         container_name: hl-nextcloud-mariadb
         image: mariadb:10.5
@@ -87,6 +87,7 @@ services:
         volumes:
             - hl-v-nextcloud:/var/www/html
             - hl-v-nextcloud-data:/var/www/html/data
+            - hl-v-nextcloud-memories:/var/www/html/data/Memories
         environment:
             - MYSQL_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_DATABASE=nextcloud
