@@ -61,7 +61,6 @@ services:
             PHOTOPRISM_SITE_AUTHOR: "Alemax"
         working_dir: "/photoprism"
         volumes:
-            - "./storage:/photoprism/storage"
             - hl-v-nextcloud-memories:/photoprism/originals
     nextcloud-db:
         container_name: hl-nextcloud-mariadb
