@@ -92,7 +92,7 @@ services:
             - MYSQL_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
-            - MYSQL_HOST=nextcloud-db
+            - MYSQL_HOST="nextcloud-db:3306"
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
     minio:
         container_name: hl-minio-storage
