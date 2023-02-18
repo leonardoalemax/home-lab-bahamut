@@ -63,7 +63,7 @@ services:
         volumes:
             - "~/Pictures:/photoprism/originals"
             - "./storage:/photoprism/storage"
-            - :hl-v-nextcloud-data/Memories:/photoprism/originals/alemax
+            - hl-v-nextcloud-data/Memories:/photoprism/originals/alemax
     nextcloud-db:
         container_name: hl-nextcloud-mariadb
         image: mariadb:10.5
