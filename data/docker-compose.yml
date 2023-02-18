@@ -110,5 +110,6 @@ volumes:
     hl-v-minio:
     hl-v-photoprism-db:
     hl-v-nextcloud:
+    hl-v-nextcloud-memories:
     hl-v-nextcloud-db:
     hl-v-nextcloud-data:
