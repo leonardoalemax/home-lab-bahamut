@@ -84,7 +84,8 @@ services:
             - nextcloud-db
         volumes:
             - hl-v-nextcloud:/var/www/html
-            - hl-v-nextcloud-memories:/var/www/html/data/alemax/files/Memories/
+            - hl-v-nextcloud-data:/var/www/html/data
+            - hl-v-nextcloud-memories:/var/www/html/data/alemax/files/Memories
         environment:
             - MYSQL_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_DATABASE=nextcloud
@@ -108,7 +109,6 @@ volumes:
     hl-v-minio:
     hl-v-photoprism-db:
     hl-v-nextcloud:
-        external: true
+    hl-v-nextcloud-data:
     hl-v-nextcloud-memories:
-        external: true
     hl-v-nextcloud-db:
