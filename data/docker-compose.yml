@@ -83,7 +83,7 @@ services:
         links:
             - nextcloud-db
         command: >
-            bash -c 'chown www-data:www-data /nextcloud-dados
+            bash -c 'chown www-data:www-data /var/www/html/data
             && /entrypoint.sh apache2-foreground'
         volumes:
             - hl-v-nextcloud:/var/www/html
