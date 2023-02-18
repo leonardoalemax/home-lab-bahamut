@@ -88,7 +88,7 @@ services:
         volumes:
             - hl-v-nextcloud:/var/www/html
             - hl-v-nextcloud-data:/var/www/html/data:rw
-            - hl-v-nextcloud-memories:/var/www/html/data/alemax/files/Memories:rw
+            # - hl-v-nextcloud-memories:/var/www/html/data/alemax/files/Memories:rw
         environment:
             - MYSQL_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_DATABASE=nextcloud
