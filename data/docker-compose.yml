@@ -1,0 +1,81 @@
+version: "3.8"
+name: home-lab-data
+
+services:
+    photoprism-db:
+        container_name: hl-photoprism-mariadb
+        image: mariadb:10.10
+        restart: unless-stopped
+        security_opt:
+            - seccomp:unconfined
+            - apparmor:unconfined
+        command: mysqld --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
+        volumes:
+            - "hl-v-photoprism-db:/var/lib/mysql"
+        environment:
+            MARIADB_AUTO_UPGRADE: "1"
+            MARIADB_INITDB_SKIP_TZINFO: "1"
+            MARIADB_DATABASE: "photoprism"
+            MARIADB_USER: "photoprism"
+            MARIADB_PASSWORD: ${ROOT_PASSWORD}
+            MARIADB_ROOT_PASSWORD: ${ROOT_PASSWORD}
+    photoprism:
+        container_name: hl-photoprism
+        image: photoprism/photoprism:latest
+        restart: unless-stopped
+        depends_on:
+            - photoprism-db
+        security_opt:
+            - seccomp:unconfined
+            - apparmor:unconfined
+        ports:
+            - "2342:2342"
+        environment:
+            PHOTOPRISM_ADMIN_USER: ${ROOT_USER}
+            PHOTOPRISM_ADMIN_PASSWORD: ${ROOT_PASSWORD}
+            PHOTOPRISM_AUTH_MODE: "password" # authentication mode (public, password)
+            PHOTOPRISM_SITE_URL: "https://photoprism.alemax.site/" # server URL in the format "http(s)://domain.name(:port)/(path)"
+            PHOTOPRISM_ORIGINALS_LIMIT: 5000 # file size limit for originals in MB (increase for high-res video)
+            PHOTOPRISM_HTTP_COMPRESSION: "gzip" # improves transfer speed and bandwidth utilization (none or gzip)
+            PHOTOPRISM_LOG_LEVEL: "info" # log level: trace, debug, info, warning, error, fatal, or panic
+            PHOTOPRISM_READONLY: "false" # do not modify originals directory (reduced functionality)
+            PHOTOPRISM_EXPERIMENTAL: "false" # enables experimental features
+            PHOTOPRISM_DISABLE_CHOWN: "false" # disables updating storage permissions via chmod and chown on startup
+            PHOTOPRISM_DISABLE_WEBDAV: "false" # disables built-in WebDAV server
+            PHOTOPRISM_DISABLE_SETTINGS: "false" # disables settings UI and API
+            PHOTOPRISM_DISABLE_TENSORFLOW: "false" # disables all features depending on TensorFlow
+            PHOTOPRISM_DISABLE_FACES: "false" # disables face detection and recognition (requires TensorFlow)
+            PHOTOPRISM_DISABLE_CLASSIFICATION: "false" # disables image classification (requires TensorFlow)
+            PHOTOPRISM_DISABLE_RAW: "false" # disables indexing and conversion of RAW files
+            PHOTOPRISM_RAW_PRESETS: "false" # enables applying user presets when converting RAW files (reduces performance)
+            PHOTOPRISM_JPEG_QUALITY: 85 # a higher value increases the quality and file size of JPEG images and thumbnails (25-100)
+            PHOTOPRISM_DETECT_NSFW: "false" # automatically flags photos as private that MAY be offensive (requires TensorFlow)
+            PHOTOPRISM_UPLOAD_NSFW: "true" # allows uploads that MAY be offensive (no effect without TensorFlow)
+            PHOTOPRISM_DATABASE_DRIVER: "mysql" # use MariaDB 10.5+ or MySQL 8+ instead of SQLite for improved performance
+            PHOTOPRISM_DATABASE_SERVER: "mariadb:3306" # MariaDB or MySQL database server (hostname:port)
+            PHOTOPRISM_DATABASE_NAME: "photoprism" # MariaDB or MySQL database schema name
+            PHOTOPRISM_DATABASE_USER: "photoprism" # MariaDB or MySQL database user name
+            PHOTOPRISM_DATABASE_PASSWORD: ${ROOT_PASSWORD} # MariaDB or MySQL database user password
+            PHOTOPRISM_SITE_CAPTION: "AI-Powered Photos App"
+            PHOTOPRISM_SITE_DESCRIPTION: "" # meta site description
+            PHOTOPRISM_SITE_AUTHOR: "" # meta site author
+        working_dir: "/photoprism"
+        volumes:
+            - "~/Pictures:/photoprism/originals"
+            - "./storage:/photoprism/storage"
+    minio:
+        container_name: hl-minio-storage
+        image: docker.io/bitnami/minio:2023
+        environment:
+            CONSOLE_SECURE_TLS_REDIRECT: "off"
+            MINIO_ROOT_USER: ${ROOT_USER}
+            MINIO_ROOT_PASSWORD: ${ROOT_PASSWORD}
+            MINIO_BROWSER_REDIRECT_URL: "https://minio.alemax.site"
+        ports:
+            - "9000:9000"
+            - "9001:9001"
+        volumes:
+            - hl-v-minio:/data
+volumes:
+    hl-v-minio:
+    hl-v-photoprism-db:
