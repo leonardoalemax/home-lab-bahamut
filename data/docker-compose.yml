@@ -76,6 +76,7 @@ services:
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
     nextcloud:
+        container_name: hl-nextcloud
         image: nextcloud
         restart: always
         ports:
