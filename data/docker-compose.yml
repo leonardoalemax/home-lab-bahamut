@@ -60,7 +60,8 @@ services:
             PHOTOPRISM_SITE_DESCRIPTION: "Fotos do Alemax"
             PHOTOPRISM_SITE_AUTHOR: "Alemax"
         working_dir: "/photoprism"
-        volumes: -./nextcloud/alemax/files/Memories:/photoprism:rw
+        volumes:
+            - ./nextcloud/alemax/files/Memories:/photoprism:rw
     nextcloud-db:
         container_name: hl-nextcloud-mariadb
         image: mariadb:10.5
