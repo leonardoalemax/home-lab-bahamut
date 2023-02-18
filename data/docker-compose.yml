@@ -38,7 +38,7 @@ services:
             PHOTOPRISM_ORIGINALS_LIMIT: 5000
             PHOTOPRISM_HTTP_COMPRESSION: "gzip"
             PHOTOPRISM_LOG_LEVEL: "info"
-            PHOTOPRISM_READONLY: "true"
+            PHOTOPRISM_READONLY: "false"
             PHOTOPRISM_EXPERIMENTAL: "false"
             PHOTOPRISM_DISABLE_CHOWN: "false"
             PHOTOPRISM_DISABLE_WEBDAV: "false"
@@ -61,7 +61,7 @@ services:
             PHOTOPRISM_SITE_AUTHOR: "Alemax"
         working_dir: "/photoprism"
         volumes:
-            - hl-v-nextcloud-memories:/photoprism
+            - hl-v-nextcloud-memories:/photoprism:rw
     nextcloud-db:
         container_name: hl-nextcloud-mariadb
         image: mariadb:10.5
@@ -82,10 +82,13 @@ services:
             - 8080:80
         links:
             - nextcloud-db
+        command: >
+            bash -c 'chown www-data:www-data /nextcloud-dados
+            && /entrypoint.sh apache2-foreground'
         volumes:
             - hl-v-nextcloud:/var/www/html
-            - hl-v-nextcloud-data:/var/www/html/data
-            - hl-v-nextcloud-memories:/var/www/html/data/alemax/files/Memories
+            - hl-v-nextcloud-data:/var/www/html/data:rw
+            - hl-v-nextcloud-memories:/var/www/html/data/alemax/files/Memories:rw
         environment:
             - MYSQL_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_DATABASE=nextcloud
