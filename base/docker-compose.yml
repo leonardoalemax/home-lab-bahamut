@@ -15,7 +15,8 @@ services:
             - ./conf.d/:/etc/nginx/conf.d/
             - /etc/letsencrypt/live/alemax.site/fullchain.pem:/etc/nginx/fullchain.pem
             - /etc/letsencrypt/live/alemax.site/privkey.pem:/etc/nginx/privkey.pem
-    containers-management:
+    portainer:
+        container_name: hl-portainer
         image: portainer/portainer-ce:latest
         ports:
             - 9443:9443
