@@ -84,9 +84,6 @@ services:
             - 8080:80
         links:
             - nextcloud-db
-        command: >
-            bash -c 'chown www-data:www-data /var/www/html/data
-            && /entrypoint.sh apache2-foreground'
         volumes:
             - hl-v-nextcloud:/var/www/html
             - ./nextcloud:/var/www/html/data:rw
