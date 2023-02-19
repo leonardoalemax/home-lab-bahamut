@@ -25,6 +25,7 @@ services:
             && chown www-data:www-data /var/www/html/data
             && /entrypoint.sh apache2-foreground'
         volumes:
+            - hl-v-nextcloud-data:/var/www/html
             - ./nextcloud:/var/www/html/data:rw
         environment:
             - POSTGRES_HOST=db
@@ -37,3 +38,4 @@ services:
             - NEXTCLOUD_ADMIN_PASSWORD=${ROOT_PASSWORD}
 volumes:
     hl-v-nextcloud-db:
+    hl-v-nextcloud-data:
