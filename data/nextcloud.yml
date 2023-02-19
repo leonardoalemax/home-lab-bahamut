@@ -8,9 +8,6 @@ services:
         restart: always
         ports:
             - 8080:80
-        command: >
-            bash -c 'mkdir -p /opt/nextcloud/data 
-            && chown www-data:www-data /opt/nextcloud/data'
         volumes:
             - hl-v-nextcloud-data:/var/www/html
             - ./nextcloud:/opt/nextcloud/data:rw
