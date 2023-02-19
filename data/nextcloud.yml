@@ -3,14 +3,16 @@ name: data-nextcloud
 
 services:
     nextclouddb:
-        image: postgres
+        image: mariadb:10.5
         restart: always
+        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
         volumes:
-            - hl-v-nextcloud-db:/var/lib/postgresql/data
+            - db:/var/lib/mysql
         environment:
-            POSTGRES_DB: nextcloud"
-            POSTGRES_USER: ${ROOT_USER}
-            POSTGRES_PASSWORD: ${ROOT_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+            MYSQL_PASSWORD: ${ROOT_PASSWORD}
+            MYSQL_DATABASE: "nextcloud"
+            MYSQL_USER: "nextcloud"
     nextcloud:
         container_name: hl-nextcloud
         image: nextcloud
@@ -23,10 +25,10 @@ services:
             - hl-v-nextcloud-data:/var/www/html
             - ./nextcloud:/opt/nextcloud/data:rw
         environment:
-            POSTGRES_HOST: "nextclouddb"
-            POSTGRES_DB: "nextcloud"
-            POSTGRES_USER: ${ROOT_USER}
-            POSTGRES_PASSWORD: ${ROOT_PASSWORD}
+            MYSQL_HOST: "nextclouddb"
+            MYSQL_DATABASE: "nextcloud"
+            MYSQL_USER: "nextcloud"
+            MYSQL_PASSWORD: ${ROOT_PASSWORD}
             NEXTCLOUD_TRUSTED_DOMAINS: "cloud.alemax.site"
             TRUSTED_DOMAINS: "cloud.alemax.site"
             OVERWRITEHOST: "cloud.alemax.site"
