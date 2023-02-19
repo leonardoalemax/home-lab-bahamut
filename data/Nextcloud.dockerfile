@@ -1,15 +1,10 @@
-ARG NEXTCLOUD_DATA_DIR=/opt/nextcloud/data
-ARG IMAGE_TAG=fpm-alpine
+FROM nextcloud
 
-FROM nextcloud:${IMAGE_TAG}
+RUN mkdir -p /opt/nextcloud/data; \
+	chown -R www-data:root /opt/nextcloud/data; \
+	chmod -R g=u /opt/nextcloud/data
 
-ARG NEXTCLOUD_DATA_DIR
-
-RUN mkdir -p ${NEXTCLOUD_DATA_DIR}; \
-	chown -R www-data:root ${NEXTCLOUD_DATA_DIR}; \
-	chmod -R g=u ${NEXTCLOUD_DATA_DIR}
-
-VOLUME ${NEXTCLOUD_DATA_DIR}
+VOLUME /opt/nextcloud/data
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["php-fpm"]
