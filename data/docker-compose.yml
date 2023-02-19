@@ -66,6 +66,8 @@ services:
         container_name: hl-nextcloud-mariadb
         image: mariadb:10.5
         restart: always
+        ports:
+            - 4006:3306
         command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
         volumes:
             - hl-v-nextcloud-db:/var/lib/mysql
@@ -92,7 +94,7 @@ services:
             - MYSQL_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
-            - MYSQL_HOST="nextcloud-db:3306"
+            - MYSQL_HOST= localhost:4006
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
     minio:
         container_name: hl-minio-storage
