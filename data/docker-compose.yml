@@ -61,40 +61,19 @@ services:
             PHOTOPRISM_SITE_AUTHOR: "Alemax"
         working_dir: "/photoprism"
         volumes:
-            - ./nextcloud/data/alemax/files/photoprism:/photoprism/originals
-    nextcloud-db:
-        container_name: hl-nextcloud-mariadb
-        image: mariadb:10.10
-        restart: unless-stopped
-        security_opt:
-            - seccomp:unconfined
-            - apparmor:unconfined
-        command: mysqld --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
-        volumes:
-            - "hl-v-nextcloud-db:/var/lib/mysql"
-        environment:
-            MARIADB_AUTO_UPGRADE: "1"
-            MARIADB_INITDB_SKIP_TZINFO: "1"
-            MARIADB_DATABASE: "nextcloud"
-            MARIADB_USER: "nextcloud"
-            MARIADB_PASSWORD: ${ROOT_PASSWORD}
-            MARIADB_ROOT_PASSWORD: ${ROOT_PASSWORD}
+            - ./nextcloud/data/alemax/files/photoprism:/photoprism/originals:rw
     nextcloud:
         container_name: hl-nextcloud
         image: nextcloud
         restart: always
         ports:
             - 8080:80
-        depends_on:
-            - nextcloud-db
-        links:
-            - nextcloud-db
         command: >
             bash -c 'mkdir -p /var/www/html/data 
             && chown www-data:www-data /var/www/html/data
             && /entrypoint.sh apache2-foreground'
         volumes:
-            - ./nextcloud:/var/www/html
+            - ./nextcloud:/var/www/html:rw
         environment:
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
     minio:
@@ -113,4 +92,3 @@ services:
 volumes:
     hl-v-minio:
     hl-v-photoprism-db:
-    hl-v-nextcloud-db:
