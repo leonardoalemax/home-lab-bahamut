@@ -17,7 +17,7 @@ services:
         image: nextcloud
         restart: always
         links:
-            - db:nextcloud-db
+            - nextcloud-db:db
         ports:
             - 8080:80
         command: >
