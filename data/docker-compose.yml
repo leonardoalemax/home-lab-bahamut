@@ -61,7 +61,7 @@ services:
             PHOTOPRISM_SITE_AUTHOR: "Alemax"
         working_dir: "/photoprism"
         volumes:
-            - ./nextcloud/alemax/files/Memories:/photoprism:rw
+            - ./nextcloud/data/alemax/files/Memories:/photoprism:rw
     nextcloud-db:
         container_name: hl-nextcloud-mariadb
         image: mariadb:10.10
@@ -88,8 +88,7 @@ services:
         depends_on:
             - nextcloud-db
         volumes:
-            - hl-v-nextcloud:/var/www/html
-            - ./nextcloud:/var/www/html/data:rw
+            - ./nextcloud:/var/www/html:rw
         environment:
             - MYSQL_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_DATABASE=nextcloud
@@ -112,5 +111,4 @@ services:
 volumes:
     hl-v-minio:
     hl-v-photoprism-db:
-    hl-v-nextcloud:
     hl-v-nextcloud-db:
