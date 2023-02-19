@@ -68,13 +68,9 @@ services:
         volumes:
             - hl-v-nextcloud-db:/var/lib/postgresql/data
         environment:
-            - POSTGRES_DB_FILE=/run/secrets/postgres_db
-            - POSTGRES_USER_FILE=/run/secrets/postgres_user
-            - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
-        secrets:
-            - postgres_db
-            - postgres_password
-            - postgres_user
+            - POSTGRES_DB=nextcloud
+            - POSTGRES_USER=nextcloud
+            - POSTGRES_PASSWORD=${ROOT_PASSWORD}
     nextcloud:
         container_name: hl-nextcloud
         image: nextcloud
@@ -88,13 +84,14 @@ services:
         volumes:
             - ./nextcloud:/var/www/html:rw
         environment:
-            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
             - POSTGRES_HOST=nextcloud-db
             - POSTGRES_DB=nextcloud
             - POSTGRES_USER=nextcloud
             - POSTGRES_PASSWORD=${ROOT_PASSWORD}
+            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
+            - TRUSTED_PROXIES=cloud.alemax.site
             - NEXTCLOUD_ADMIN_USER=${ROOT_USER}
-            - NEXTCLOUD_ADMIN_PASSWORD=${ROOT_PASSWORD}
+            - NEXTCLOUD_ADMIN_PASSWORD=192.168.0.21
     minio:
         container_name: hl-minio-storage
         image: docker.io/bitnami/minio:2023
