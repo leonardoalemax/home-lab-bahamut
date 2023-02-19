@@ -15,7 +15,7 @@ services:
             MYSQL_USER: "nextcloud"
     nextcloud:
         container_name: hl-nextcloud
-        image: nextcloud
+        build: ./Nextcloud.dockerfile
         restart: always
         depends_on:
             - nextclouddb
