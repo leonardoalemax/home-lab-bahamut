@@ -14,11 +14,11 @@ services:
         volumes:
             - hl-v-nextcloud-data:/var/www/html
             - ./nextcloud:/opt/nextcloud/data:rw
-         environment: 
+        environment:
             SQLITE_DATABASE: nextcloud
             NEXTCLOUD_TRUSTED_DOMAINS: cloud.alemax.site
             NEXTCLOUD_DATA_DIR: /opt/nextcloud/data
-            NEXTCLOUD_TRUSTED_PROXIES: '192.168.0.21'
+            NEXTCLOUD_TRUSTED_PROXIES: "192.168.0.21"
             NEXTCLOUD_ADMIN_USER: ${ROOT_USER}
             NEXTCLOUD_ADMIN_PASSWORD: ${ROOT_PASSWORD}
 volumes:
