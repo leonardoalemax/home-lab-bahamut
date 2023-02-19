@@ -2,17 +2,31 @@ version: "3.8"
 name: data-nextcloud
 
 services:
+    nextclouddb:
+        image: postgres
+        restart: always
+        volumes:
+            - hl-v-nextcloud-db:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: nextcloud"
+            POSTGRES_USER: ${ROOT_USER}
+            POSTGRES_PASSWORD: ${ROOT_PASSWORD}
     nextcloud:
         container_name: hl-nextcloud
         image: nextcloud
         restart: always
+        depends_on:
+            - nextclouddb
         ports:
             - 8080:80
         volumes:
             - hl-v-nextcloud-data:/var/www/html
             - ./nextcloud:/opt/nextcloud/data:rw
         environment:
-            SQLITE_DATABASE: "nextcloud"
+            POSTGRES_HOST: "nextclouddb"
+            POSTGRES_DB: "nextcloud"
+            POSTGRES_USER: ${ROOT_USER}
+            POSTGRES_PASSWORD: ${ROOT_PASSWORD}
             NEXTCLOUD_TRUSTED_DOMAINS: "cloud.alemax.site"
             TRUSTED_DOMAINS: "cloud.alemax.site"
             OVERWRITEHOST: "cloud.alemax.site"
@@ -21,7 +35,6 @@ services:
             OVERWRITECLIURL: "https://cloud.alemax.site"
             NEXTCLOUD_DATA_DIR: "/opt/nextcloud/data"
             NEXTCLOUD_TRUSTED_PROXIES: "192.168.0.21"
-            NEXTCLOUD_ADMIN_USER: ${ROOT_USER}
-            NEXTCLOUD_ADMIN_PASSWORD: ${ROOT_PASSWORD}
 volumes:
     hl-v-nextcloud-data:
+    hl-v-nextcloud-db:
