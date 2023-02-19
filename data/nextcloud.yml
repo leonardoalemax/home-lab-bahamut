@@ -2,22 +2,10 @@ version: "3.8"
 name: data-nextcloud
 
 services:
-    nextcloud-db:
-        container_name: hl-nextcloud-db
-        image: postgres
-        restart: always
-        volumes:
-            - hl-v-nextcloud-db:/var/lib/postgresql/data
-        environment:
-            - POSTGRES_DB=nextcloud
-            - POSTGRES_USER=nextcloud
-            - POSTGRES_PASSWORD=${ROOT_PASSWORD}
     nextcloud:
         container_name: hl-nextcloud
         image: nextcloud
         restart: always
-        links:
-            - nextcloud-db:db
         ports:
             - 8080:80
         command: >
@@ -28,15 +16,10 @@ services:
             - hl-v-nextcloud-data:/var/www/html
             - ./nextcloud:/data:rw
         environment:
-            - POSTGRES_HOST=db
-            - POSTGRES_DB=nextcloud
-            - POSTGRES_USER=nextcloud
-            - POSTGRES_PASSWORD=${ROOT_PASSWORD}
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
             - NEXTCLOUD_DATA_DIR=/data
             - NEXTCLOUD_TRUSTED_PROXIES=192.168.0.21
             - NEXTCLOUD_ADMIN_USER=${ROOT_USER}
             - NEXTCLOUD_ADMIN_PASSWORD=${ROOT_PASSWORD}
 volumes:
-    hl-v-nextcloud-db:
     hl-v-nextcloud-data:
