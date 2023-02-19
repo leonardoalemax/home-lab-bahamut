@@ -61,7 +61,7 @@ services:
             PHOTOPRISM_SITE_AUTHOR: "Alemax"
         working_dir: "/photoprism"
         volumes:
-            - ./nextcloud/data/alemax/files/photoprism:/photoprism/originals:rw
+            - ./nextcloud/alemax/files/photoprism:/photoprism/originals:rw
     minio:
         container_name: hl-minio-storage
         image: docker.io/bitnami/minio:2023

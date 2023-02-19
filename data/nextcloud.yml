@@ -25,7 +25,7 @@ services:
             && chown www-data:www-data /var/www/html/data
             && /entrypoint.sh apache2-foreground'
         volumes:
-            - ./nextcloud:/var/www/html:rw
+            - ./nextcloud:/var/www/html/data:rw
         environment:
             - POSTGRES_HOST=db
             - POSTGRES_DB=nextcloud
