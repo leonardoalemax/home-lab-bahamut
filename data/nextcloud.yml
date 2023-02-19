@@ -21,19 +21,20 @@ services:
         ports:
             - 8080:80
         command: >
-            bash -c 'mkdir -p /var/www/html/data 
-            && chown www-data:www-data /var/www/html/data
+            bash -c 'mkdir -p /data 
+            && chown www-data:www-data /data
             && /entrypoint.sh apache2-foreground'
         volumes:
             - hl-v-nextcloud-data:/var/www/html
-            - ./nextcloud:/var/www/html/data:rw
+            - ./nextcloud:/data:rw
         environment:
             - POSTGRES_HOST=db
             - POSTGRES_DB=nextcloud
             - POSTGRES_USER=nextcloud
             - POSTGRES_PASSWORD=${ROOT_PASSWORD}
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
-            - TRUSTED_PROXIES=192.168.0.21
+            - NEXTCLOUD_DATA_DIR=/data
+            - NEXTCLOUD_TRUSTED_PROXIES=192.168.0.21
             - NEXTCLOUD_ADMIN_USER=${ROOT_USER}
             - NEXTCLOUD_ADMIN_PASSWORD=${ROOT_PASSWORD}
 volumes:
