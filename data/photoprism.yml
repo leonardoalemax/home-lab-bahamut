@@ -1,0 +1,36 @@
+version: "3.8"
+name: data-nextcloud
+
+services:
+    nextcloud-db:
+        image: postgres
+        restart: always
+        volumes:
+            - hl-v-nextcloud-db:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_DB=nextcloud
+            - POSTGRES_USER=nextcloud
+            - POSTGRES_PASSWORD=${ROOT_PASSWORD}
+    nextcloud:
+        container_name: hl-nextcloud
+        image: nextcloud
+        restart: always
+        ports:
+            - 8080:80
+        command: >
+            bash -c 'mkdir -p /var/www/html/data 
+            && chown www-data:www-data /var/www/html/data
+            && /entrypoint.sh apache2-foreground'
+        volumes:
+            - ./nextcloud:/var/www/html:rw
+        environment:
+            - POSTGRES_HOST=nextcloud-db
+            - POSTGRES_DB=nextcloud
+            - POSTGRES_USER=nextcloud
+            - POSTGRES_PASSWORD=${ROOT_PASSWORD}
+            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.alemax.site
+            - TRUSTED_PROXIES=192.168.0.21
+            - NEXTCLOUD_ADMIN_USER=${ROOT_USER}
+            - NEXTCLOUD_ADMIN_PASSWORD=${ROOT_PASSWORD}
+volumes:
+    hl-v-nextcloud-db:
