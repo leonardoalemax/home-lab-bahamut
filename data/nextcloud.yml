@@ -6,8 +6,6 @@ services:
         container_name: hl-nextcloud
         build: ./Nextcloud.dockerfile
         restart: always
-        depends_on:
-            - nextclouddb
         ports:
             - 8080:80
         volumes:
