@@ -75,6 +75,20 @@ services:
             - "9001:9001"
         volumes:
             - hl-v-minio:/data
+    qbittorrent:
+        image: emmercm/qbittorrent:latest
+        restart: unless-stopped
+        environment:
+            - TZ=America/Sao_Paulo
+        ports:
+            - 8090:8080
+            - 6881:6881/tcp
+            - 6881:6881/udp
+        volumes:
+            - ./qtorrent/config:/config
+            - ./qtorrent/data:/data
+            - ./nextcloud/alemax/files/downloads:/downloads
+            - ./qtorrent/incomplete:/incomplete
 volumes:
     hl-v-minio:
     hl-v-photoprism-db:
