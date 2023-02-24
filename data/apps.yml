@@ -88,7 +88,7 @@ services:
         volumes:
             - ./qtorrent/config:/config
             - ./qtorrent/data:/data
-            - ./nextcloud/alemax/files/downloads:/downloads
+            - ./nextcloud/alemax/files/downloads:/downloads:rw
             - ./qtorrent/incomplete:/incomplete
 volumes:
     hl-v-minio:
