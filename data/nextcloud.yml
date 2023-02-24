@@ -4,7 +4,7 @@ name: data-nextcloud
 services:
     nextcloud:
         container_name: hl-nextcloud
-        build: .
+        image: nextcloud
         restart: always
         ports:
             - 8080:80
@@ -21,6 +21,5 @@ services:
             NEXTCLOUD_DATA_DIR: "/opt/nextcloud/data"
             NEXTCLOUD_TRUSTED_PROXIES: "192.168.0.21"
 volumes:
-    hl-v-nextcloud-data:
     hl-v-nextcloud-html:
     hl-v-nextcloud-db:
