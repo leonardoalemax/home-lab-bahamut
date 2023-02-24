@@ -4,12 +4,13 @@ name: data-nextcloud
 services:
     nextcloud:
         container_name: hl-nextcloud
-        build: ./Nextcloud.dockerfile
+        image: nextcloud
         restart: always
         ports:
             - 8080:80
         volumes:
-            - hl-v-nextcloud-data:/var/www/html
+            - hl-v-nextcloud-data:/opt/nextcloud_data
+            - hl-v-nextcloud-html:/var/www/html
             - ./nextcloud:/opt/nextcloud/data:rw
         environment:
             NEXTCLOUD_TRUSTED_DOMAINS: "cloud.alemax.site"
@@ -22,4 +23,5 @@ services:
             NEXTCLOUD_TRUSTED_PROXIES: "192.168.0.21"
 volumes:
     hl-v-nextcloud-data:
+    hl-v-nextcloud-html:
     hl-v-nextcloud-db:
