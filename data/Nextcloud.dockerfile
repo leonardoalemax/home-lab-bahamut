@@ -115,6 +115,12 @@ RUN { \
 
 VOLUME /var/www/html
 
+RUN mkdir -p /opt/nextcloud/data; \
+	chown -R www-data:root /opt/nextcloud/data; \
+	chmod -R g=u /opt/nextcloud/data
+
+VOLUME /opt/nextcloud/data
+
 RUN a2enmod headers rewrite remoteip ;\
     {\
      echo RemoteIPHeader X-Real-IP ;\
@@ -152,12 +158,6 @@ RUN set -ex; \
     \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $fetchDeps; \
     rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /opt/nextcloud/data; \
-	chown -R www-data:root /opt/nextcloud/data; \
-	chmod -R g=u /opt/nextcloud/data
-
-VOLUME /opt/nextcloud/data
 
 COPY *.sh upgrade.exclude /
 COPY config/* /usr/src/nextcloud/config/
