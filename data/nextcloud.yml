@@ -4,7 +4,7 @@ name: data-nextcloud
 services:
     nextcloud:
         container_name: hl-nextcloud
-        build: ./Dockerfile
+        build: .
         restart: always
         ports:
             - 8080:80
