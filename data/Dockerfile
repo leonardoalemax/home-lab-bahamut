@@ -1,6 +1,11 @@
 # DO NOT EDIT: created by update.sh from Dockerfile-alpine.template
 FROM php:8.1-fpm-alpine3.16
 
+RUN mkdir -p /opt/nextcloud/data
+RUN chown -R www-data:root /opt/nextcloud/data
+RUN chmod -R g=u /opt/nextcloud/data
+
+VOLUME /opt/nextcloud/data
 # entrypoint.sh and cron.sh dependencies
 RUN set -ex; \
     \
@@ -103,12 +108,6 @@ RUN { \
     chmod -R g=u /var/www
 
 VOLUME /var/www/html
-
-RUN mkdir -p /opt/nextcloud/data
-RUN chown -R www-data:root /opt/nextcloud/data
-RUN chmod -R g=u /opt/nextcloud/data
-
-VOLUME /opt/nextcloud/data
 
 ENV NEXTCLOUD_VERSION 25.0.4
 
