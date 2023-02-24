@@ -76,6 +76,7 @@ services:
         volumes:
             - hl-v-minio:/data
     qbittorrent:
+        container_name: hl-qbittorrent
         image: emmercm/qbittorrent:latest
         restart: unless-stopped
         environment:
