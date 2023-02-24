@@ -4,13 +4,13 @@ name: data-nextcloud
 services:
     nextcloud:
         container_name: hl-nextcloud
-        image: nextcloud
+        build: ./Nextcloud.dockerfile
         restart: always
         ports:
             - 8080:80
         volumes:
             - hl-v-nextcloud-html:/var/www/html
-            - ./nextcloud:/opt/nextcloud/data:rw
+            - ./nextcloud:/opt/nextcloud_data:rw
         environment:
             NEXTCLOUD_TRUSTED_DOMAINS: "cloud.alemax.site"
             TRUSTED_DOMAINS: "cloud.alemax.site"
@@ -18,8 +18,9 @@ services:
             OVERWRITEPROTOCOL: "https"
             OVERWRITECONDADDR: "^192\\.168\\.0\\.21$"
             OVERWRITECLIURL: "https://cloud.alemax.site"
-            NEXTCLOUD_DATA_DIR: "/opt/nextcloud/data"
+            NEXTCLOUD_DATA_DIR: "/opt/nextcloud_data"
             NEXTCLOUD_TRUSTED_PROXIES: "192.168.0.21"
 volumes:
+    hl-v-nextcloud-data:
     hl-v-nextcloud-html:
     hl-v-nextcloud-db:
