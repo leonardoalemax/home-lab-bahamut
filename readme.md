@@ -91,4 +91,6 @@ After that you can run the apps stack:
 
 ```bash
 sudo docker compose -f 'apps.yml' up -d
+sudo docker compose -f 'apps.yml' exec qtorrent chown -R 911:911 /incomplete
+
 ```
