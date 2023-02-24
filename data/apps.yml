@@ -77,7 +77,7 @@ services:
             - hl-v-minio:/data
     qbittorrent:
         container_name: hl-qbittorrent
-        image: emmercm/qbittorrent:latest
+        image: linuxserver/qbittorrent:latest
         restart: unless-stopped
         environment:
             - TZ=America/Sao_Paulo
