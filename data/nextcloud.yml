@@ -2,17 +2,6 @@ version: "3.8"
 name: data-nextcloud
 
 services:
-    nextclouddb:
-        image: mariadb:10.5
-        restart: always
-        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-        volumes:
-            - hl-v-nextcloud-db:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
-            MYSQL_PASSWORD: ${ROOT_PASSWORD}
-            MYSQL_DATABASE: "nextcloud"
-            MYSQL_USER: "nextcloud"
     nextcloud:
         container_name: hl-nextcloud
         build: ./Nextcloud.dockerfile
@@ -25,10 +14,6 @@ services:
             - hl-v-nextcloud-data:/var/www/html
             - ./nextcloud:/opt/nextcloud/data:rw
         environment:
-            MYSQL_HOST: "nextclouddb"
-            MYSQL_DATABASE: "nextcloud"
-            MYSQL_USER: "nextcloud"
-            MYSQL_PASSWORD: ${ROOT_PASSWORD}
             NEXTCLOUD_TRUSTED_DOMAINS: "cloud.alemax.site"
             TRUSTED_DOMAINS: "cloud.alemax.site"
             OVERWRITEHOST: "cloud.alemax.site"
