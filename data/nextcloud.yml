@@ -9,7 +9,6 @@ services:
         ports:
             - 8080:80
         volumes:
-            - hl-v-nextcloud-data:/opt/nextcloud_data
             - hl-v-nextcloud-html:/var/www/html
             - ./nextcloud:/opt/nextcloud/data:rw
         environment:
