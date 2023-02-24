@@ -23,6 +23,6 @@ services:
             OVERWRITECLIURL: "https://cloud.alemax.site"
             NEXTCLOUD_DATA_DIR: "/opt/nextcloud/data"
             NEXTCLOUD_TRUSTED_PROXIES: "192.168.0.21"
-            ENABLE_FILESYSTEM_CHECK_CHANGES: 1
+            ENABLE_FILESYSTEM_CHECK_CHANGES: "1"
 volumes:
     hl-v-nextcloud-html:
