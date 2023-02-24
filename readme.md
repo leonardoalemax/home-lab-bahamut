@@ -91,6 +91,19 @@ After that you can run the apps stack:
 
 ```bash
 sudo docker compose -f 'apps.yml' up -d
-sudo docker compose -f 'apps.yml' exec qtorrent chown -R 911:911 /incomplete
+sudo docker compose -f 'apps.yml' exec qbittorrent chown -R 911:911 /incomplete
 
+```
+
+scan new files
+
+```bash
+sudo docker compose -f 'nextcloud.yml' exec --user www-data nextcloud php occ files:scan --all
+```
+
+add a cron tabb to file sync`
+
+```txt
+1 * * * * sudo docker compose -f '/home/alemax/home-lab-bahamut/data/nextcloud.yml' exec --user www-data nextcloud php occ files:scan --all
+1 * * * * chmod -R 777 /home/alemax/home-lab-bahamut/data/nextcloud/alemax
 ```
