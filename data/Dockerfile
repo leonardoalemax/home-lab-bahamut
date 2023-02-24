@@ -1,3 +1,4 @@
+# DO NOT EDIT: created by update.sh from Dockerfile-debian.template
 FROM php:8.0-apache-bullseye
 
 # entrypoint.sh and cron.sh dependencies
@@ -115,9 +116,9 @@ RUN { \
 
 VOLUME /var/www/html
 
-RUN mkdir -p /opt/nextcloud/data; \
-	chown -R www-data:root /opt/nextcloud/data; \
-	chmod -R g=u /opt/nextcloud/data
+RUN mkdir -p /opt/nextcloud/data
+RUN chown -R www-data:root /opt/nextcloud/data
+RUN chmod -R g=u /opt/nextcloud/data
 
 VOLUME /opt/nextcloud/data
 
