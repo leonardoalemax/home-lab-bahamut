@@ -90,6 +90,15 @@ services:
             - ./qtorrent/data:/data
             - ./nextcloud/alemax/files/downloads:/downloads:rw
             - ./qtorrent/incomplete:/incomplete
+    samba:
+        image: crazymax/samba
+        network_mode: host
+        volumes:
+            - "./samba:/data"
+            - "./nextcloud/alemax/files:/samba/alemax"
+        environment:
+            - "BROWSABLE=yes"
+        restart: always
 volumes:
     hl-v-minio:
     hl-v-photoprism-db:

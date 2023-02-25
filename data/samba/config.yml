@@ -1,0 +1,21 @@
+auth:
+    - user: alemax
+      group: alemax
+      uid: 1000
+      gid: 1000
+      password: 12345
+global:
+    - "force user = alemax"
+    - "force group = alemax"
+
+share:
+    - name: alemax
+      path: /samba/alemax
+      browsable: yes
+      readonly: no
+      guestok: no
+      validusers: alemax
+      writelist: alemax
+      veto: no
+      hidefiles: /_*/
+      recycle: yes
