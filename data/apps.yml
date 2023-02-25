@@ -91,6 +91,7 @@ services:
             - ./nextcloud/alemax/files/downloads:/downloads:rw
             - ./qtorrent/incomplete:/incomplete
     samba:
+        container_name: hl-samba
         image: crazymax/samba
         network_mode: host
         volumes:
