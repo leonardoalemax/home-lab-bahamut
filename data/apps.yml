@@ -75,16 +75,12 @@ services:
             - "9001:9001"
         volumes:
             - hl-v-minio:/data
-    wiznotes:
-        container_name: hl-wiznotes
-        image: wiznote/wizserver:latest
+    logseq:
+        container_name: hl-logseq
+        image: ghcr.io/logseq/logseq-webapp:latest
         restart: unless-stopped
-        volumes:
-            - "/etc/localtime:/etc/localtime"
-            - "hl-v-wiznotes:/wiz/storage"
         ports:
             - "4200:80"
-            - "9269:9269/udp"
     qbittorrent:
         container_name: hl-qbittorrent
         image: linuxserver/qbittorrent:latest
@@ -111,6 +107,5 @@ services:
             - "BROWSABLE=yes"
         restart: always
 volumes:
-    hl-v-wiznotes:
     hl-v-minio:
     hl-v-photoprism-db:
