@@ -77,6 +77,18 @@ https://docker.alemax.site/
 
 the user admin will be the same you set on the .env file.
 
+### Runing git stack
+
+just run the command inside the git repository
+
+initial user will be 'root', with the password generate in instalation:
+
+sudo docker compose up -d
+
+```bash
+sudo docker exec -it gitlab-ce grep 'Password:' /etc/gitlab/initial_root_password
+```
+
 #### Runing Data stack
 
 ```bash
