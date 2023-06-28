@@ -7,7 +7,7 @@ services:
         container_name: gitlab-ce
         environment:
             GITLAB_OMNIBUS_CONFIG: |
-                external_url 'http://git.alemax.site'
+                external_url 'https://git.alemax.site'
         ports:
             - "6067:80"
             - "8443:443"
