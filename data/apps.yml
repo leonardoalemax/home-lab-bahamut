@@ -2,6 +2,24 @@ version: "3.8"
 name: data-apps
 
 services:
+    jellyfin:
+        image: lscr.io/linuxserver/jellyfin:latest
+        container_name: jellyfin
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Etc/UTC
+            - JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
+        volumes:
+            - ./nextcloud/alemax/files/jellyfin/library:/config
+            - ./nextcloud/alemax/files/jellyfin/tvseries:/data/tvshows
+            - ./nextcloud/alemax/files/jellyfin/movies:/data/movies
+        ports:
+            - 8096:8096
+            - 8920:8920 #optional
+            - 7359:7359/udp #optional
+            - 1900:1900/udp #optional
+        restart: unless-stopped
     photoprism-db:
         container_name: hl-photoprism-mariadb
         image: mariadb:10.10
