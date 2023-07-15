@@ -4,24 +4,23 @@ name: data-apps
 services:
     jellyfin:
         image: lscr.io/linuxserver/jellyfin:latest
-        container_name: jellyfin
+        container_name: bonsai-jellyfin
         environment:
             - PUID=1000
             - PGID=1000
             - TZ=Etc/UTC
-            - JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
         volumes:
             - /media/alemax/Garuda/jellyfin/library:/config
             - /media/alemax/Garuda/jellyfin/tvseries:/data/tvshows
             - /media/alemax/Garuda/jellyfin/movies:/data/movies
         ports:
             - 8096:8096
-            - 8920:8920 #optional
-            - 7359:7359/udp #optional
-            - 1900:1900/udp #optional
+            - 8920:8920
+            - 7359:7359/udp
+            - 1900:1900/udp
         restart: unless-stopped
     photoprism-db:
-        container_name: hl-photoprism-mariadb
+        container_name: bosai-photoprism-mariadb
         image: mariadb:10.10
         restart: unless-stopped
         security_opt:
@@ -29,7 +28,7 @@ services:
             - apparmor:unconfined
         command: mysqld --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
         volumes:
-            - "hl-v-photoprism-db:/var/lib/mysql"
+            - "bosai-v-photoprism-db:/var/lib/mysql"
         environment:
             MARIADB_AUTO_UPGRADE: "1"
             MARIADB_INITDB_SKIP_TZINFO: "1"
@@ -38,7 +37,7 @@ services:
             MARIADB_PASSWORD: ${ROOT_PASSWORD}
             MARIADB_ROOT_PASSWORD: ${ROOT_PASSWORD}
     photoprism:
-        container_name: hl-photoprism
+        container_name: bosai-photoprism
         image: photoprism/photoprism:latest
         restart: unless-stopped
         depends_on:
@@ -80,27 +79,8 @@ services:
         working_dir: "/photoprism"
         volumes:
             - /media/alemax/Garuda/photoprism:/photoprism/originals:rw
-    minio:
-        container_name: hl-minio-storage
-        image: docker.io/bitnami/minio:2023
-        environment:
-            CONSOLE_SECURE_TLS_REDIRECT: "off"
-            MINIO_ROOT_USER: ${ROOT_USER}
-            MINIO_ROOT_PASSWORD: ${ROOT_PASSWORD}
-            MINIO_BROWSER_REDIRECT_URL: "https://minio.alemax.site"
-        ports:
-            - "9000:9000"
-            - "9001:9001"
-        volumes:
-            - hl-v-minio:/data
-    logseq:
-        container_name: hl-logseq
-        image: ghcr.io/logseq/logseq-webapp:latest
-        restart: unless-stopped
-        ports:
-            - "4200:80"
     qbittorrent:
-        container_name: hl-qbittorrent
+        container_name: bosai-qbittorrent
         image: linuxserver/qbittorrent:latest
         restart: unless-stopped
         environment:
@@ -115,7 +95,7 @@ services:
             - /media/alemax/Garuda/downloads:/downloads:rw
             - /media/alemax/Garuda/torrents/incomplete:/incomplete
     samba:
-        container_name: hl-samba
+        container_name: bosai-samba
         image: crazymax/samba
         network_mode: host
         volumes:
@@ -125,5 +105,5 @@ services:
             - "BROWSABLE=yes"
         restart: always
 volumes:
-    hl-v-minio:
-    hl-v-photoprism-db:
+    bosai-v-minio:
+    bosai-v-photoprism-db:
