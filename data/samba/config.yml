@@ -9,8 +9,8 @@ global:
     - "force group = alemax"
 
 share:
-    - name: alemax
-      path: /samba/alemax
+    - name: garuda
+      path: /samba/garuda
       browsable: yes
       readonly: no
       guestok: no
