@@ -11,9 +11,9 @@ services:
             - TZ=Etc/UTC
             - JELLYFIN_PublishedServerUrl=192.168.0.5 #optional
         volumes:
-            - ./nextcloud/alemax/files/jellyfin/library:/config
-            - ./nextcloud/alemax/files/jellyfin/tvseries:/data/tvshows
-            - ./nextcloud/alemax/files/jellyfin/movies:/data/movies
+            - /media/alemax/Garuda/jellyfin/library:/config
+            - /media/alemax/Garuda/jellyfin/tvseries:/data/tvshows
+            - /media/alemax/Garuda/jellyfin/movies:/data/movies
         ports:
             - 8096:8096
             - 8920:8920 #optional
@@ -79,7 +79,7 @@ services:
             PHOTOPRISM_SITE_AUTHOR: "Alemax"
         working_dir: "/photoprism"
         volumes:
-            - ./nextcloud/alemax/files/photoprism:/photoprism/originals:rw
+            - /media/alemax/Garuda/photoprism:/photoprism/originals:rw
     minio:
         container_name: hl-minio-storage
         image: docker.io/bitnami/minio:2023
@@ -110,17 +110,17 @@ services:
             - 6881:6881/tcp
             - 6881:6881/udp
         volumes:
-            - ./qtorrent/config:/config
-            - ./qtorrent/data:/data
-            - ./nextcloud/alemax/files/downloads:/downloads:rw
-            - ./qtorrent/incomplete:/incomplete
+            - /media/alemax/Garuda/torrents/config:/config
+            - /media/alemax/Garuda/torrents/data:/data
+            - /media/alemax/Garuda/downloads:/downloads:rw
+            - /media/alemax/Garuda/torrents/incomplete:/incomplete
     samba:
         container_name: hl-samba
         image: crazymax/samba
         network_mode: host
         volumes:
             - "./samba:/data"
-            - "./nextcloud/alemax/files:/samba/alemax"
+            - "/media/alemax/Garuda:/samba/garuda"
         environment:
             - "BROWSABLE=yes"
         restart: always
