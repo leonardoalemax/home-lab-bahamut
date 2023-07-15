@@ -45,7 +45,7 @@ sudo certbot certonly --manual --preferred-challenges=dns --email <your@email.co
 in my case:
 
 ```bash
-sudo certbot certonly --manual --preferred-challenges=dns --email leualemax@gmail.com --server https://acme-v02.api.letsencrypt.org/directory --agree-tos -d alemax.site -d *.alemax.site
+sudo certbot certonly --manual --preferred-challenges=dns --email 'leualemax@gmail.com' --server 'https://acme-v02.api.letsencrypt.org/directory' --agree-tos -d 'alemax.site' -d '*.alemax.site'
 ```
 
 you will be prompted with a key to be setted on your dns server in a txt record, pls, test the propagation before hit continue. (testing using this site https://mxtoolbox.com/txtlookup.aspx)
