@@ -15,14 +15,14 @@ services:
             - ./conf.d/:/etc/nginx/conf.d/
             - /etc/letsencrypt/live/alemax.site-0002/fullchain.pem:/etc/nginx/fullchain.pem
             - /etc/letsencrypt/live/alemax.site-0002/privkey.pem:/etc/nginx/privkey.pem
-    # portainer:
-    #     container_name: bonsai-portainer
-    #     image: portainer/portainer-ce:latest
-    #     ports:
-    #         - 9443:9443
-    #     volumes:
-    #         - bonsai-v-portainer:/data
-    #         - /var/run/docker.sock:/var/run/docker.sock
-    #     restart: unless-stopped
-# volumes:
-# bonsai-v-portainer:
+    portainer:
+        container_name: bonsai-portainer
+        image: portainer/portainer-ce:latest
+        ports:
+            - 9443:9443
+        volumes:
+            - bonsai-v-portainer:/data
+            - /var/run/docker.sock:/var/run/docker.sock
+        restart: unless-stopped
+volumes:
+    bonsai-v-portainer:
