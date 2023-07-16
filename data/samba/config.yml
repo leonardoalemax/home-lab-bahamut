@@ -19,3 +19,14 @@ share:
       veto: no
       hidefiles: /_*/
       recycle: yes
+
+    - name: ifrit
+      path: /samba/ifrit
+      browsable: yes
+      readonly: no
+      guestok: no
+      validusers: alemax
+      writelist: alemax
+      veto: no
+      hidefiles: /_*/
+      recycle: yes
